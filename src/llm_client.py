@@ -103,7 +103,8 @@ def is_available(model: str) -> bool:
     OUT: True/False (False on connection error)
     """
     models = list_models()
-    return model in models
+    # Ollama returns names with tags (e.g. "phi3.5:latest"); match on base name too
+    return model in models or any(m.split(":")[0] == model for m in models)
 
 
 def list_models() -> list:

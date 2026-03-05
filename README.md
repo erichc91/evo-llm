@@ -13,7 +13,13 @@ Treats system prompts as genomes and evolves them via genetic algorithm — usin
 2. Pull a model: `ollama pull phi3.5`
 3. Install dependencies: `pip install -r requirements.txt`
 
-**Run an experiment:**
+**Run the interactive UI (recommended):**
+```bash
+ollama serve          # start Ollama in background if not already running
+python gradio_app.py  # opens browser at http://localhost:7860
+```
+
+**Run via CLI:**
 ```bash
 python run.py --task reasoning --model phi3.5 --generations 20 --pop-size 12
 ```
@@ -73,6 +79,7 @@ seed prompt --> diversify (LLM mutations) --> population[N]
 ```
 evo-llm/
   run.py                  # CLI entry point
+  gradio_app.py           # Interactive Gradio UI (live fitness chart, prompt diffs)
   requirements.txt
   src/
     llm_client.py         # Ollama REST wrapper
