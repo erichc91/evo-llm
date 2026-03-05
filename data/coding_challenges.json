@@ -1,0 +1,63 @@
+[
+  {
+    "id": "code_001",
+    "description": "Write a function `reverse_string(s: str) -> str` that returns the string reversed.",
+    "function_name": "reverse_string",
+    "test_cases": [
+      {"input": ["hello"], "expected": "olleh"},
+      {"input": [""], "expected": ""},
+      {"input": ["a"], "expected": "a"},
+      {"input": ["racecar"], "expected": "racecar"},
+      {"input": ["Python"], "expected": "nohtyP"}
+    ]
+  },
+  {
+    "id": "code_002",
+    "description": "Write a function `count_vowels(s: str) -> int` that returns the number of vowels (a, e, i, o, u — case-insensitive) in the string.",
+    "function_name": "count_vowels",
+    "test_cases": [
+      {"input": ["hello"], "expected": 2},
+      {"input": [""], "expected": 0},
+      {"input": ["rhythm"], "expected": 0},
+      {"input": ["AEIOU"], "expected": 5},
+      {"input": ["The quick brown fox"], "expected": 5}
+    ]
+  },
+  {
+    "id": "code_003",
+    "description": "Write a function `fizzbuzz(n: int) -> list` that returns a list of strings for numbers 1 through n (inclusive). For multiples of 3 use 'Fizz', for multiples of 5 use 'Buzz', for multiples of both use 'FizzBuzz', otherwise use the number as a string.",
+    "function_name": "fizzbuzz",
+    "test_cases": [
+      {"input": [1], "expected": ["1"]},
+      {"input": [5], "expected": ["1", "2", "Fizz", "4", "Buzz"]},
+      {"input": [15], "expected": ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"]},
+      {"input": [3], "expected": ["1", "2", "Fizz"]},
+      {"input": [0], "expected": []}
+    ]
+  },
+  {
+    "id": "code_004",
+    "description": "Write a function `is_palindrome(s: str) -> bool` that returns True if the string is a palindrome, ignoring case and spaces.",
+    "function_name": "is_palindrome",
+    "test_cases": [
+      {"input": ["racecar"], "expected": true},
+      {"input": ["hello"], "expected": false},
+      {"input": ["A man a plan a canal Panama"], "expected": true},
+      {"input": [""], "expected": true},
+      {"input": ["a"], "expected": true},
+      {"input": ["Was it a car or a cat I saw"], "expected": true}
+    ]
+  },
+  {
+    "id": "code_005",
+    "description": "Write a function `two_sum(nums: list, target: int) -> list` that returns the indices [i, j] of the two numbers in nums that add up to target. Assume exactly one solution exists and you may not use the same element twice. Return the indices in ascending order.",
+    "function_name": "two_sum",
+    "test_cases": [
+      {"input": [[2, 7, 11, 15], 9], "expected": [0, 1]},
+      {"input": [[3, 2, 4], 6], "expected": [1, 2]},
+      {"input": [[3, 3], 6], "expected": [0, 1]},
+      {"input": [[1, 5, 3, 7], 12], "expected": [1, 3]},
+      {"input": [[-1, -2, -3, -4, -5], -8], "expected": [2, 4]}
+    ]
+  }
+]

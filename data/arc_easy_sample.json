@@ -1,0 +1,122 @@
+[
+  {
+    "id": "arc_001",
+    "question": "Which of the following is a property of all living things?",
+    "choices": {"A": "They can move on their own", "B": "They reproduce", "C": "They are made of metal", "D": "They need sunlight"},
+    "answer": "B"
+  },
+  {
+    "id": "arc_002",
+    "question": "What is the main function of the roots of a plant?",
+    "choices": {"A": "To produce food through photosynthesis", "B": "To absorb water and nutrients from the soil", "C": "To attract pollinators", "D": "To release oxygen into the air"},
+    "answer": "B"
+  },
+  {
+    "id": "arc_003",
+    "question": "A student pushes a heavy box across the floor. What force acts against the motion of the box?",
+    "choices": {"A": "Gravity", "B": "Magnetism", "C": "Friction", "D": "Surface tension"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_004",
+    "question": "Which layer of the Earth is the thinnest?",
+    "choices": {"A": "Inner core", "B": "Outer core", "C": "Mantle", "D": "Crust"},
+    "answer": "D"
+  },
+  {
+    "id": "arc_005",
+    "question": "What process do plants use to convert sunlight into food?",
+    "choices": {"A": "Respiration", "B": "Fermentation", "C": "Photosynthesis", "D": "Transpiration"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_006",
+    "question": "Which of the following is an example of a chemical change?",
+    "choices": {"A": "Ice melting into water", "B": "Sugar dissolving in tea", "C": "Wood burning in a fire", "D": "Glass breaking into pieces"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_007",
+    "question": "What type of rock forms when molten lava cools and hardens?",
+    "choices": {"A": "Sedimentary", "B": "Metamorphic", "C": "Fossil", "D": "Igneous"},
+    "answer": "D"
+  },
+  {
+    "id": "arc_008",
+    "question": "Which organelle is responsible for producing energy in animal cells?",
+    "choices": {"A": "Nucleus", "B": "Ribosome", "C": "Mitochondria", "D": "Vacuole"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_009",
+    "question": "What is the unit used to measure electrical resistance?",
+    "choices": {"A": "Volt", "B": "Ampere", "C": "Watt", "D": "Ohm"},
+    "answer": "D"
+  },
+  {
+    "id": "arc_010",
+    "question": "Which gas makes up the largest percentage of Earth's atmosphere?",
+    "choices": {"A": "Oxygen", "B": "Carbon dioxide", "C": "Nitrogen", "D": "Argon"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_011",
+    "question": "A sound wave travels fastest through which medium?",
+    "choices": {"A": "A vacuum", "B": "Air at room temperature", "C": "Liquid water", "D": "Steel"},
+    "answer": "D"
+  },
+  {
+    "id": "arc_012",
+    "question": "What is the chemical formula for water?",
+    "choices": {"A": "CO2", "B": "NaCl", "C": "H2O", "D": "O2"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_013",
+    "question": "Which of the following best describes a food chain?",
+    "choices": {"A": "A cycle that shows how water moves through the environment", "B": "A sequence showing how energy passes from one organism to another", "C": "A list of animals that live in the same habitat", "D": "A diagram showing how rocks are formed"},
+    "answer": "B"
+  },
+  {
+    "id": "arc_014",
+    "question": "When a ball is thrown upward, what happens to its speed as it rises?",
+    "choices": {"A": "It increases due to gravity", "B": "It stays the same throughout", "C": "It decreases due to gravity", "D": "It first increases then decreases"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_015",
+    "question": "Which of the following is NOT a renewable energy source?",
+    "choices": {"A": "Solar power", "B": "Wind power", "C": "Coal", "D": "Hydroelectric power"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_016",
+    "question": "What is the role of white blood cells in the human body?",
+    "choices": {"A": "Carry oxygen to body tissues", "B": "Digest food in the stomach", "C": "Filter waste from the blood", "D": "Defend the body against infection"},
+    "answer": "D"
+  },
+  {
+    "id": "arc_017",
+    "question": "Which planet in our solar system has the most moons?",
+    "choices": {"A": "Jupiter", "B": "Mars", "C": "Earth", "D": "Venus"},
+    "answer": "A"
+  },
+  {
+    "id": "arc_018",
+    "question": "What happens to the volume of water when it freezes into ice?",
+    "choices": {"A": "It decreases", "B": "It increases", "C": "It stays exactly the same", "D": "It first decreases then increases"},
+    "answer": "B"
+  },
+  {
+    "id": "arc_019",
+    "question": "Which of the following is an example of an element?",
+    "choices": {"A": "Water", "B": "Salt", "C": "Oxygen", "D": "Sugar"},
+    "answer": "C"
+  },
+  {
+    "id": "arc_020",
+    "question": "What causes seasons on Earth?",
+    "choices": {"A": "Changes in Earth's distance from the Sun", "B": "The tilt of Earth's axis as it orbits the Sun", "C": "The speed at which Earth rotates", "D": "Solar flares increasing the Sun's heat output"},
+    "answer": "B"
+  }
+]
