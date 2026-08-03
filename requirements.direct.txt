@@ -1,0 +1,7 @@
+﻿# Curated direct dependencies, preserved from the pre-migration requirements.txt.
+# requirements.txt is now a full pip freeze (exact pins) -- see header there.
+
+requests>=2.31.0
+ollama>=0.6.1
+gradio>=4.0.0
+plotly>=5.0.0
