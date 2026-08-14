@@ -134,29 +134,88 @@ def tournament_select(scored_pop: list, tournament_size: int = 3) -> dict:
     return max(contestants, key=lambda o: o["fitness"])
 
 
+_OFFLINE_SUFFIXES = (
+    "Explain your reasoning step by step.",
+    "Answer concisely.",
+    "Consider each option before answering.",
+    "State your assumptions.",
+)
+
+
+def _swap_within_line(line: str) -> str:
+    """Swap two adjacent words in a line, or two characters if it is too short.
+
+    Guarantees a different string for any input with at least two characters.
+    """
+    words = line.split()
+    if len(words) >= 2:
+        i = random.randrange(0, len(words) - 1)
+        words[i], words[i + 1] = words[i + 1], words[i]
+        swapped = " ".join(words)
+        if swapped != line.strip():
+            return swapped
+    stripped = line.strip()
+    if len(stripped) >= 2:
+        i = random.randrange(0, len(stripped) - 1)
+        chars = list(stripped)
+        chars[i], chars[i + 1] = chars[i + 1], chars[i]
+        return "".join(chars)
+    return stripped
+
+
 def _offline_mutate(prompt: str, mutation_type: str) -> str:
     """Offline stand-in for llm_mutate, used when dry_run=True.
 
-    Deliberately returns a *different* string rather than the original: if
-    every organism came back identical, dry-run would exercise the plumbing
-    but not the search, and a broken selection step would still look fine.
+    Returns a *different* string rather than the original: if every organism
+    came back identical, dry-run would exercise the plumbing but not the
+    search, and a broken selection step would still look fine. That property
+    is asserted by `tests/test_offline_operators.py` — it is the whole reason
+    this function exists rather than `return prompt`.
+
+    Operates per line so multi-line prompts keep their structure; collapsing
+    a bulleted prompt onto one line is a different prompt, not a mutation of
+    it.
     """
-    words = prompt.split()
-    if mutation_type == "trim" and len(words) > 4:
-        return " ".join(words[: max(3, int(len(words) * 0.8))])
     if mutation_type == "extend":
-        return prompt.rstrip() + " Explain your reasoning step by step."
-    if len(words) > 3:
-        i = random.randrange(0, len(words) - 1)
-        words[i], words[i + 1] = words[i + 1], words[i]
-    return " ".join(words)
+        # Vary the suffix so repeated extends do not stack the same sentence.
+        return prompt.rstrip() + " " + random.choice(_OFFLINE_SUFFIXES)
+
+    lines = prompt.splitlines() or [prompt]
+
+    if mutation_type == "trim":
+        words = prompt.split()
+        if len(words) > 4:
+            return " ".join(words[: max(3, int(len(words) * 0.8))])
+        # Too short to trim meaningfully — fall through to a swap so the
+        # contract (always different) still holds.
+
+    candidates = [i for i, ln in enumerate(lines) if len(ln.strip()) >= 2]
+    if not candidates:
+        # Nothing mutable (empty or single character): append rather than
+        # return the input unchanged.
+        return (prompt + " " + random.choice(_OFFLINE_SUFFIXES)).strip()
+
+    idx = random.choice(candidates)
+    lines[idx] = _swap_within_line(lines[idx])
+    return "\n".join(lines)
 
 
 def _offline_crossover(parent_a: str, parent_b: str) -> str:
-    """Offline stand-in for llm_crossover, used when dry_run=True."""
+    """Offline stand-in for llm_crossover, used when dry_run=True.
+
+    Keeps the front of A and the back of B. Uses ceiling division on A so a
+    two-word parent contributes its first word rather than being dropped —
+    the previous midpoint arithmetic silently discarded content from short
+    prompts.
+    """
     a, b = parent_a.split(), parent_b.split()
-    merged = a[: max(1, len(a) // 2)] + b[len(b) // 2 :]
-    return " ".join(merged) or parent_a
+    if not a:
+        return parent_b
+    if not b:
+        return parent_a
+    head = a[: max(1, (len(a) + 1) // 2)]
+    tail = b[len(b) // 2:]
+    return " ".join(head + tail)
 
 
 def llm_mutate(prompt: str, model: str, mutation_type: str = None,

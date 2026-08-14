@@ -34,6 +34,12 @@ python run.py --task reasoning --model phi3.5 --generations 20 --pop-size 12
 python run.py --task reasoning --dry-run --generations 5
 ```
 
+`--dry-run` exercises the full loop with no model installed: fitness is drawn
+from `random.uniform(0.1, 0.9)` and mutation/crossover run offline. **It is a
+plumbing test, not a demo — because elitism keeps the best score seen, the
+fitness curve rises under dry-run no matter what.** Don't read anything into
+the numbers; the point is that every stage executes.
+
 **List past runs:**
 ```bash
 python run.py --list-runs
