@@ -4,6 +4,8 @@
 
 Treats system prompts as genomes and evolves them via genetic algorithm — using the LLM itself as the mutation and crossover operator. Fitness is measured by actual task performance (reasoning accuracy or coding pass-rate), not vibes.
 
+![evo-llm Gradio UI: parameter panel, live fitness curve, and population leaderboard](screenshot.png)
+
 ---
 
 ## Quick Start
@@ -11,7 +13,10 @@ Treats system prompts as genomes and evolves them via genetic algorithm — usin
 **Prerequisites:**
 1. Install [Ollama](https://ollama.com)
 2. Pull a model: `ollama pull phi3.5`
-3. Install dependencies: `pip install -r requirements.txt`
+3. Install dependencies: `pip install -r requirements.direct.txt`
+
+   (`requirements.txt` is a full pip freeze with exact pins — use it only if you
+   need to reproduce the original environment exactly.)
 
 **Run the interactive UI (recommended):**
 ```bash
@@ -61,7 +66,7 @@ seed prompt --> diversify (LLM mutations) --> population[N]
 | Flag | Default | Description |
 |------|---------|-------------|
 | `--task` | `reasoning` | `reasoning` or `coding` |
-| `--model` | `phi3` | Any Ollama model name |
+| `--model` | `phi3.5` | Any Ollama model name |
 | `--generations` | `20` | Number of GA generations |
 | `--pop-size` | `12` | Population size |
 | `--n-samples` | `10` | Questions per fitness evaluation |
@@ -69,7 +74,7 @@ seed prompt --> diversify (LLM mutations) --> population[N]
 | `--elite-count` | `2` | Elites carried forward unchanged |
 | `--seed-prompt` | task default | Override starting prompt |
 | `--use-judge` | off | Enable LLM-as-judge scoring |
-| `--dry-run` | off | Skip all LLM calls (test mode) |
+| `--dry-run` | off | Skip all LLM calls — synthetic fitness and offline mutation/crossover, so the full loop runs with no model installed |
 | `--list-runs` | — | Print past run history and exit |
 
 ---

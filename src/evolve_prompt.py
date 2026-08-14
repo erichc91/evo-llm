@@ -134,17 +134,47 @@ def tournament_select(scored_pop: list, tournament_size: int = 3) -> dict:
     return max(contestants, key=lambda o: o["fitness"])
 
 
-def llm_mutate(prompt: str, model: str, mutation_type: str = None) -> str:
+def _offline_mutate(prompt: str, mutation_type: str) -> str:
+    """Offline stand-in for llm_mutate, used when dry_run=True.
+
+    Deliberately returns a *different* string rather than the original: if
+    every organism came back identical, dry-run would exercise the plumbing
+    but not the search, and a broken selection step would still look fine.
     """
-    IN:  prompt (str), model (str), mutation_type (str or None)
+    words = prompt.split()
+    if mutation_type == "trim" and len(words) > 4:
+        return " ".join(words[: max(3, int(len(words) * 0.8))])
+    if mutation_type == "extend":
+        return prompt.rstrip() + " Explain your reasoning step by step."
+    if len(words) > 3:
+        i = random.randrange(0, len(words) - 1)
+        words[i], words[i + 1] = words[i + 1], words[i]
+    return " ".join(words)
+
+
+def _offline_crossover(parent_a: str, parent_b: str) -> str:
+    """Offline stand-in for llm_crossover, used when dry_run=True."""
+    a, b = parent_a.split(), parent_b.split()
+    merged = a[: max(1, len(a) // 2)] + b[len(b) // 2 :]
+    return " ".join(merged) or parent_a
+
+
+def llm_mutate(prompt: str, model: str, mutation_type: str = None,
+               dry_run: bool = False) -> str:
+    """
+    IN:  prompt (str), model (str), mutation_type (str or None), dry_run (bool)
     PROC:
         - Randomly choose from rephrase / extend / trim if mutation_type is None
-        - Build meta-prompt and call llm_client.generate()
+        - If dry_run: return an offline synthetic mutation, making no LLM call
+        - Otherwise build meta-prompt and call llm_client.generate()
         - On OllamaError: return original prompt unchanged
     OUT: new (or original on failure) prompt string
     """
     if mutation_type is None:
         mutation_type = random.choice(list(_MUTATION_STYLES.keys()))
+
+    if dry_run:
+        return _offline_mutate(prompt, mutation_type)
 
     instruction = _MUTATION_STYLES.get(mutation_type, _MUTATION_STYLES["rephrase"])
     meta_prompt = _MUTATION_TEMPLATE.format(
@@ -166,14 +196,19 @@ def llm_mutate(prompt: str, model: str, mutation_type: str = None) -> str:
         return prompt
 
 
-def llm_crossover(parent_a: str, parent_b: str, model: str) -> str:
+def llm_crossover(parent_a: str, parent_b: str, model: str,
+                  dry_run: bool = False) -> str:
     """
-    IN:  parent_a (str), parent_b (str), model (str)
+    IN:  parent_a (str), parent_b (str), model (str), dry_run (bool)
     PROC:
-        - Call LLM to merge best elements of both prompts
+        - If dry_run: splice the two parents offline, making no LLM call
+        - Otherwise call LLM to merge best elements of both prompts
         - On OllamaError: return parent_a unchanged
     OUT: new combined prompt string (or parent_a on failure)
     """
+    if dry_run:
+        return _offline_crossover(parent_a, parent_b)
+
     meta_prompt = _CROSSOVER_TEMPLATE.format(parent_a=parent_a, parent_b=parent_b)
 
     try:
@@ -253,7 +288,7 @@ def run_generation(
     for _ in range(pop_size - len(next_gen)):
         if random.random() < mutation_rate:
             parent = tournament_select(population, tournament_size)
-            new_prompt = llm_mutate(parent["prompt"], model)
+            new_prompt = llm_mutate(parent["prompt"], model, dry_run=dry_run)
             child = _make_organism(
                 new_prompt,
                 generation=next_gen_num,
@@ -262,7 +297,8 @@ def run_generation(
         else:
             parent_a = tournament_select(population, tournament_size)
             parent_b = tournament_select(population, tournament_size)
-            new_prompt = llm_crossover(parent_a["prompt"], parent_b["prompt"], model)
+            new_prompt = llm_crossover(parent_a["prompt"], parent_b["prompt"], model,
+                                       dry_run=dry_run)
             child = _make_organism(
                 new_prompt,
                 generation=next_gen_num,

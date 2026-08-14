@@ -57,7 +57,7 @@ that genuinely improve model accuracy.
 
 **Run an experiment:**
 ```
-cd C:\Users\erich\Code_Projects\evo-llm
+cd evo-llm
 python run.py --task reasoning --model phi3.5 --generations 20 --pop-size 12
 ```
 

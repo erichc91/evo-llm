@@ -1,6 +1,6 @@
 # run.py — CLI entry point for evo-llm evolutionary prompt optimizer
 # Usage: python run.py [options]
-# Example: python run.py --task reasoning --model phi3 --generations 10 --dry-run
+# Example: python run.py --task reasoning --model phi3.5 --generations 10 --dry-run
 
 import argparse
 import sys
@@ -58,9 +58,9 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--task",          type=str,   default="reasoning",
                         metavar="TASK",
                         help="'reasoning' or 'coding'  (default: reasoning)")
-    parser.add_argument("--model",         type=str,   default="phi3",
+    parser.add_argument("--model",         type=str,   default="phi3.5",
                         metavar="MODEL",
-                        help="Ollama model name  (default: phi3)")
+                        help="Ollama model name  (default: phi3.5)")
     parser.add_argument("--generations",   type=int,   default=20,
                         metavar="N",
                         help="Number of generations  (default: 20)")
